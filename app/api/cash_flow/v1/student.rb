@@ -43,34 +43,34 @@ class CashFlow::V1::Student < Grape::API
      #end 
     #end
       
-    desc "Search by academic_year"
-    params do 
-    optional :academic_year, type: String, default: ""
-    optional :grade_id,  type: String, default: ""
-    optional :section, type: String, default: ""
-    optional :Authorization, type: String, documentation: { param_type: 'header' }, default: "" 
-    end
-    get '/search', http_codes: [
-      { code: 200, message: 'Success', model: CashFlow::V1::Entities::StudentAdmissionSearch},
-      { code: 422, message: 'Validation Errors', model: CashFlow::V1::Entities::ApiValidationError },
-      { code: 500, message: 'Internal Server Error', model: CashFlow::V1::Entities::ApiError}
-    ]do
-    if params[:academic_year].present? && params[:grade_id].present? && params[:section].present?
-      search = StudentAdmission.where("academic_year = ? && grade_id = ? && section = ?", params[:academic_year], params[:grade_id], params[:section])
-      present search, with: CashFlow::V1::Entities::AcademicGradeSection
-    elsif params[:grade_id].present?
-        search= StudentAdmission.where("grade_id = ?", params[:grade_id])
-        present search, with: CashFlow::V1::Entities::AcademicGradeSection
-    elsif params[:academic_year].present? && params[:grade_id].present?
-        search= StudentAdmission.where("academic_year = ? && grade_id = ?", params[:academic_year], params[:grade_id])
-         present search, with: CashFlow::V1::Entities::AcademicGradeSection
-    elsif params[:grade_id].present? && params[:section].present?
-      search= StudentAdmission.where("grade_id = ? && section = ?", params[:grade_id], params[:section])
-       present search, with: CashFlow::V1::Entities::AcademicGradeSection
-    elsif params[:academic_year].present? && params[:section].present?
-        search= StudentAdmission.where("academic_year = ? && section = ?", params[:academic_year], params[:section])
-         present search, with: CashFlow::V1::Entities::AcademicGradeSection
-    end
+    # desc "Search by academic_year"
+    # params do 
+    # optional :academic_year, type: String, default: ""
+    # optional :grade_id,  type: String, default: ""
+    # optional :section, type: String, default: ""
+    # optional :Authorization, type: String, documentation: { param_type: 'header' }, default: "" 
+    # end
+    # get '/search', http_codes: [
+    #   { code: 200, message: 'Success', model: CashFlow::V1::Entities::StudentAdmissionSearch},
+    #   { code: 422, message: 'Validation Errors', model: CashFlow::V1::Entities::ApiValidationError },
+    #   { code: 500, message: 'Internal Server Error', model: CashFlow::V1::Entities::ApiError}
+    # ]do
+    # if params[:academic_year].present? && params[:grade_id].present? && params[:section].present?
+    #   search = StudentAdmission.where("academic_year = ? && grade_id = ? && section = ?", params[:academic_year], params[:grade_id], params[:section])
+    #   present search, with: CashFlow::V1::Entities::AcademicGradeSection
+    # elsif params[:grade_id].present?
+    #     search= StudentAdmission.where("grade_id = ?", params[:grade_id])
+    #     present search, with: CashFlow::V1::Entities::AcademicGradeSection
+    # elsif params[:academic_year].present? && params[:grade_id].present?
+    #     search= StudentAdmission.where("academic_year = ? && grade_id = ?", params[:academic_year], params[:grade_id])
+    #      present search, with: CashFlow::V1::Entities::AcademicGradeSection
+    # elsif params[:grade_id].present? && params[:section].present?
+    #   search= StudentAdmission.where("grade_id = ? && section = ?", params[:grade_id], params[:section])
+    #    present search, with: CashFlow::V1::Entities::AcademicGradeSection
+    # elsif params[:academic_year].present? && params[:section].present?
+    #     search= StudentAdmission.where("academic_year = ? && section = ?", params[:academic_year], params[:section])
+    #      present search, with: CashFlow::V1::Entities::AcademicGradeSection
+    # end
   end
     desc "Auto search"
     params do
